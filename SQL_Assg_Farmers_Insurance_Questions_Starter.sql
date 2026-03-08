@@ -186,7 +186,17 @@ FROM FarmersInsuranceData;
 -- 	[4 Marks]
 -- ###
 -- TYPE YOUR CODE BELOW >
-
+SELECT 
+    a.srcStateName,
+    a.srcDistrictName,
+    SUM(a.FarmersPremiumAmount) AS TotalFarmersPremiumAmount
+FROM FarmersInsuranceData a
+INNER JOIN FarmersInsuranceData b
+    ON a.srcStateName    = b.srcStateName
+   AND a.srcDistrictName = b.srcDistrictName
+   AND a.srcYear         = b.srcYear
+WHERE b.`Insurance units` > 10
+GROUP BY a.srcStateName, a.srcDistrictName;
 
 
 -- ###
@@ -197,7 +207,21 @@ FROM FarmersInsuranceData;
 -- 	[5 Marks]
 -- ###
 -- TYPE YOUR CODE BELOW >
-
+SELECT 
+    f.srcStateName,
+    f.srcDistrictName,
+    f.srcYear                     AS Year,
+    f.TotalPopulation,
+    m.MaxFarmersPremiumAmount
+FROM FarmersInsuranceData f
+INNER JOIN (
+    SELECT 
+        srcDistrictName,
+        MAX(FarmersPremiumAmount) AS MaxFarmersPremiumAmount
+    FROM FarmersInsuranceData
+    GROUP BY srcDistrictName
+    HAVING MAX(FarmersPremiumAmount) > 2000
+) m ON f.srcDistrictName = m.srcDistrictName;
 
 
 -- ###
@@ -209,7 +233,18 @@ FROM FarmersInsuranceData;
 -- 	[5 Marks]
 -- ###
 -- TYPE YOUR CODE BELOW >
-
+SELECT 
+    a.srcStateName,
+    a.srcDistrictName,
+    SUM(a.FarmersPremiumAmount)  AS TotalFarmersPremiumAmount,
+    AVG(b.TotalPopulation)       AS AvgPopulation
+FROM FarmersInsuranceData a
+LEFT JOIN FarmersInsuranceData b
+    ON a.srcStateName    = b.srcStateName
+   AND a.srcDistrictName = b.srcDistrictName
+GROUP BY a.srcStateName, a.srcDistrictName
+HAVING SUM(a.FarmersPremiumAmount) > 10000
+ORDER BY TotalFarmersPremiumAmount DESC;
 
 
 
@@ -225,7 +260,12 @@ FROM FarmersInsuranceData;
 -- 	[2 Marks]
 -- ###
 -- TYPE YOUR CODE BELOW >
-
+SELECT DISTINCT srcDistrictName
+FROM FarmersInsuranceData
+WHERE TotalFarmersCovered > (
+    SELECT AVG(TotalFarmersCovered)
+    FROM FarmersInsuranceData
+);
 
 
 
@@ -236,7 +276,14 @@ FROM FarmersInsuranceData;
 -- 	[3 Marks]
 -- ###
 -- TYPE YOUR CODE BELOW >
-
+SELECT DISTINCT srcStateName
+FROM FarmersInsuranceData
+WHERE SumInsured > (
+    SELECT SumInsured
+    FROM FarmersInsuranceData
+    ORDER BY FarmersPremiumAmount DESC
+    LIMIT 1
+);
 
 
 
@@ -247,6 +294,18 @@ FROM FarmersInsuranceData;
 -- 	[5 Marks]
 -- ###
 -- TYPE YOUR CODE BELOW >
+SELECT DISTINCT srcDistrictName
+FROM FarmersInsuranceData
+WHERE FarmersPremiumAmount > (
+    SELECT AVG(FarmersPremiumAmount)
+    FROM FarmersInsuranceData
+    WHERE srcStateName = (
+        SELECT srcStateName
+        FROM FarmersInsuranceData
+        ORDER BY TotalPopulation DESC
+        LIMIT 1
+    )
+);
 
 
 
