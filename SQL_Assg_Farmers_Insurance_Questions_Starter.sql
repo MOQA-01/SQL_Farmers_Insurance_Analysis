@@ -6,14 +6,15 @@ use ndap;
 -- SELECT Queries [5 Marks]
 
 -- 	Q1.	Retrieve the names of all states (srcStateName) from the dataset.
--- ###
+SELECT DISTINCT srcStateName
+FROM FarmersInsuranceData;
 -- 	[2 Marks]
 -- ###
 -- TYPE YOUR CODE BELOW >
 -- <write your answers in the empty spaces given, the length of solution queries (and the solution writing space) can vary>
 
 
-###
+--###
 
 -- 	Q2.	Retrieve the total number of farmers covered (TotalFarmersCovered) 
 -- 		and the sum insured (SumInsured) for each state (srcStateName), ordered by TotalFarmersCovered in descending order.
