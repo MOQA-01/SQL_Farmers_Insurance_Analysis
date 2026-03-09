@@ -78,7 +78,9 @@ FROM FarmersInsuranceData;
 -- 	[3 Marks]
 -- ###
 -- TYPE YOUR CODE BELOW >
-
+Select srcYear, avg(InsuredLandArea) as AvgInsuredLandArea
+From farmerinsurancedata 
+group by srcYear ;
 
 
 -- ###
@@ -88,7 +90,10 @@ FROM FarmersInsuranceData;
 -- 	[3 Marks]
 -- ###
 -- TYPE YOUR CODE BELOW >
-
+Select srcStateName, srcDistrictName, sum(TotalFarmersCovered) as TotalFarmersCovered
+From farmerinsurancedata 
+where Insuranceunits > 0 
+group by srcStateName, srcDistrictName;
 
 
 -- ###
@@ -99,7 +104,14 @@ FROM FarmersInsuranceData;
 -- 	[4 Marks]
 -- ###
 -- TYPE YOUR CODE BELOW >
-
+Select srcStateName,
+SUM(FarmersPremiumAmount) AS TotalFarmersPremium,
+SUM(StatePremiumAmount) AS TotalStatePremium,
+SUM(GOVPremiumAmount) AS TotalGovPremium, 
+SUM(TotalFarmersCovered)AS TotalFarmersCovered
+FROM farmerinsurancedata
+WHERE SumInsured > 500000
+GROUP BY srcStateName;
 
 
 
@@ -114,7 +126,10 @@ FROM FarmersInsuranceData;
 -- 	[2 Marks]
 -- ###
 -- TYPE YOUR CODE BELOW >
-
+SELECT SrcStateName, srcDistrictName, TotalPopulation
+From farmerinsurancedata
+Where srcYear = 2020
+Order by TotalPopulation desc;
 
 
 
@@ -126,10 +141,18 @@ FROM FarmersInsuranceData;
 -- 	[3 Marks]
 -- ###
 -- TYPE YOUR CODE BELOW >
+SELECT 
+    srcStateName,
+    srcDistrictName,
+    SumInsured,
+    FarmersPremiumAmount
+FROM farmerinsurancedata
+Where FarmersPremiumAmount > 0 
+Order by SumInsured, FarmersPremiumAmount 
+Limit 10;
 
 
-
-###
+-- ###
 
 -- 	Q12. 	Retrieve the top 3 states (srcStateName) along with the year (srcYear) where the ratio of insured farmers (TotalFarmersCovered) to the total population (TotalPopulation) is highest. 
 -- 		Sort the results by the ratio in descending order.
@@ -138,7 +161,19 @@ FROM FarmersInsuranceData;
 -- ###
 -- TYPE YOUR CODE BELOW >
 
-
+SELECT 
+    srcStateName,
+    srcYear,
+    TotalFarmersCovered,
+    TotalPopulation,
+    CAST(TotalFarmersCovered AS FLOAT) / TotalPopulation AS CoverageRatio
+FROM 
+  farmerinsurancedata
+WHERE 
+    TotalPopulation > 0 
+ORDER BY 
+    CoverageRatio DESC
+LIMIT 3;
 
 -- ###
 
@@ -152,7 +187,9 @@ FROM FarmersInsuranceData;
 -- 	[2 Marks]
 -- ###
 -- TYPE YOUR CODE BELOW >
-
+Select Distinct srcStateName, 
+ SUBSTRING(srcStateName, 1, 3) AS StateShortName
+from farmerinsurancedata
 
 
 -- ###
@@ -163,7 +200,9 @@ FROM FarmersInsuranceData;
 -- ###
 -- TYPE YOUR CODE BELOW >
 
-
+Select srcDistrictName 
+From farmerinsurancedata
+Where srcDistrictName LIKE 'B%';
 
 -- ###
 
@@ -172,7 +211,10 @@ FROM FarmersInsuranceData;
 -- 	[2 Marks]
 -- ###
 -- TYPE YOUR CODE BELOW >
-
+Select srcStateName, 
+srcDistrictName
+From farmerinsurancedata
+Where srcDistrictName  LIKE '%pur';
 
 -- ###
 
