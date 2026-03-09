@@ -79,7 +79,7 @@ FROM FarmersInsuranceData;
 -- ###
 -- TYPE YOUR CODE BELOW >
 Select srcYear, avg(InsuredLandArea) as AvgInsuredLandArea
-From farmerinsurancedata 
+From FarmersInsuranceData 
 group by srcYear ;
 
 
@@ -91,7 +91,7 @@ group by srcYear ;
 -- ###
 -- TYPE YOUR CODE BELOW >
 Select srcStateName, srcDistrictName, sum(TotalFarmersCovered) as TotalFarmersCovered
-From farmerinsurancedata 
+From FarmersInsuranceData 
 where Insuranceunits > 0 
 group by srcStateName, srcDistrictName;
 
@@ -109,7 +109,7 @@ SUM(FarmersPremiumAmount) AS TotalFarmersPremium,
 SUM(StatePremiumAmount) AS TotalStatePremium,
 SUM(GOVPremiumAmount) AS TotalGovPremium, 
 SUM(TotalFarmersCovered)AS TotalFarmersCovered
-FROM farmerinsurancedata
+FROM FarmersInsuranceData
 WHERE SumInsured > 500000
 GROUP BY srcStateName;
 
@@ -127,7 +127,7 @@ GROUP BY srcStateName;
 -- ###
 -- TYPE YOUR CODE BELOW >
 SELECT SrcStateName, srcDistrictName, TotalPopulation
-From farmerinsurancedata
+From FarmersInsuranceData
 Where srcYear = 2020
 Order by TotalPopulation desc;
 
@@ -146,7 +146,7 @@ SELECT
     srcDistrictName,
     SumInsured,
     FarmersPremiumAmount
-FROM farmerinsurancedata
+FROM FarmersInsuranceData
 Where FarmersPremiumAmount > 0 
 Order by SumInsured, FarmersPremiumAmount 
 Limit 10;
@@ -168,7 +168,7 @@ SELECT
     TotalPopulation,
     CAST(TotalFarmersCovered AS FLOAT) / TotalPopulation AS CoverageRatio
 FROM 
-  farmerinsurancedata
+  FarmersInsuranceData
 WHERE 
     TotalPopulation > 0 
 ORDER BY 
@@ -189,7 +189,7 @@ LIMIT 3;
 -- TYPE YOUR CODE BELOW >
 Select Distinct srcStateName, 
  SUBSTRING(srcStateName, 1, 3) AS StateShortName
-from farmerinsurancedata
+from FarmersInsuranceData
 
 
 -- ###
@@ -201,7 +201,7 @@ from farmerinsurancedata
 -- TYPE YOUR CODE BELOW >
 
 Select srcDistrictName 
-From farmerinsurancedata
+From FarmersInsuranceData
 Where srcDistrictName LIKE 'B%';
 
 -- ###
@@ -213,7 +213,7 @@ Where srcDistrictName LIKE 'B%';
 -- TYPE YOUR CODE BELOW >
 Select srcStateName, 
 srcDistrictName
-From farmerinsurancedata
+From FarmersInsuranceData
 Where srcDistrictName  LIKE '%pur';
 
 -- ###
